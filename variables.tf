@@ -1,9 +1,19 @@
 # Project Variables
 
-variable "name" {
-  description = "Basename to prefix resources."
+variable "prefix" {
+  description = "Prefix resources with this."
   type        = string
   default     = "minecraft"
+}
+
+variable "region" {
+  description = "IBM Cloud Region"
+  default = "eu-de"
+}
+
+variable "zone" {
+  description = "IBM Cloud Zone"
+  default =   "eu-de-2"
 }
 
 variable "api_key" {
@@ -12,12 +22,12 @@ variable "api_key" {
   type        = string
 }
 
-variable "ssh_key" {
-  description = "Existing SSH Key ID"
-  default = "mark-x1"
-}
-
- variable "minecraft_port" {
+variable "minecraft_port" {
   description = "Minecraft server port number"
   default = 25565
- }
+}
+
+variable "ssh_key" {
+  description = "Existing SSH Key ID in your IBM Cloud Account"
+  default = "mark-x1"
+}

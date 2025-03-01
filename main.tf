@@ -4,9 +4,9 @@
 
 # Locals and variables
 locals {
-   BASENAME = var.name
-   REGION   = "eu-de"
-   ZONE     = "eu-de-2"
+   BASENAME = var.prefix
+   REGION   = var.region
+   ZONE     = var.zone
 }
 
 # Existing SSH key can be provided
@@ -17,7 +17,7 @@ data "ibm_is_ssh_key" "ssh_key_id" {
 
 # IBM Cloud Resource Group
 resource "ibm_resource_group" "this" {
-  name     = var.name
+  name     = local.BASENAME
 }
 
 
@@ -29,6 +29,7 @@ resource "ibm_resource_group" "this" {
 
 resource "ibm_is_vpc" "this" {
   name = "${local.BASENAME}"
+  resource_group = ibm_resource_group.this.id
 }
 
 # Security group
@@ -98,6 +99,7 @@ resource "ibm_is_instance" "this" {
    zone    = local.ZONE
    image   = data.ibm_is_image.ubuntu.id
    profile = "bz2-1x4"
+   resource_group = ibm_resource_group.this.id
 
    # References to the subnet and security groups
    primary_network_interface {
