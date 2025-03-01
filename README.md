@@ -23,8 +23,12 @@ Ensure you provide the API Key:
 ```
 export IC_API_KEY=<your api key>
 export TF_VAR_api_key=$IC_API_KEY
-export TF_VAR_prefix=<unique name eg. birdtest2>
 ```
+
+Optionally provide your own *environment* name to support multiple installation within same Cloud account.
+
+export TF_VAR_prefix=minecraft-2
+
 
 1. Run `terraform plan`
 2. Run `terraform apply`
