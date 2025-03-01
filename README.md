@@ -1,6 +1,7 @@
-# Infrastructure as Code
+Minecraft Server on IBM Z 
+==========================
 
-## Minecraft Server on IBM Z 
+Infrastructure as Code with Terraform.
 
 
 ## Prequisites
@@ -11,7 +12,7 @@
 
 ## Configuration
 
-1c. Run `terraform init`
+1. Run `terraform init`
 
 [Take care to store](https://spacelift.io/blog/terraform-state) the **terraform.tfstate** file, as this file is needed when you apply or destroy your infrastructure.
 

@@ -28,7 +28,7 @@ resource "ibm_resource_group" "this" {
 
 
 resource "ibm_is_vpc" "this" {
-  name = "${local.BASENAME}-vpc"
+  name = "${local.BASENAME}"
 }
 
 # Security group
@@ -72,7 +72,7 @@ resource "ibm_is_security_group_rule" "egress_all" {
 
 # Subnet
 resource "ibm_is_subnet" "this" {
-   name                     = "${local.BASENAME}-subnet"
+   name                     = "${local.BASENAME}"
    vpc                      = ibm_is_vpc.this.id
    zone                     = local.ZONE
    total_ipv4_address_count = 256
@@ -92,7 +92,7 @@ data "ibm_is_image" "ubuntu" {
 
 # Virtual Server Insance
 resource "ibm_is_instance" "this" {
-   name    = "${local.BASENAME}-vsi1"
+   name    = "${local.BASENAME}"
    vpc     = ibm_is_vpc.this.id
    keys    = [ data.ibm_is_ssh_key.ssh_key_id.id ]
    zone    = local.ZONE
@@ -115,7 +115,7 @@ resource "ibm_is_instance" "this" {
 
 # Request a foaling ip
 resource "ibm_is_floating_ip" "this" {
-   name   = "${local.BASENAME}-fip"
+   name   = "${local.BASENAME}"
    target = ibm_is_instance.this.primary_network_interface[0].id
 }
 
