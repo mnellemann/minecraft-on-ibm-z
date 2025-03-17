@@ -20,11 +20,20 @@ Infrastructure as Code with Terraform.
 
 ## Plan & Apply
 
-Ensure you provide the API Key:
+Provide the API Key by setting environment variables or Terraform will ask you for it.
+
+For Linux and macOS:
 
 ```shell
 export IC_API_KEY=<your api key>
 export TF_VAR_api_key=$IC_API_KEY
+```
+
+for Windows:
+
+```bat
+set IC_API_KEY=<your api key>
+set TF_VAR_api_key=%IC_API_KEY%
 ```
 
 Optionally provide your own *environment* name to support multiple installation within same Cloud account.

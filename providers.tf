@@ -1,5 +1,6 @@
 # Project Providers
 
+# Use a recent version of the IBM Cloud provider for Terraform
 terraform {
   required_providers {
     ibm = {

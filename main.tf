@@ -2,16 +2,17 @@
 ### General
 ###
 
-# Locals and variables
+# Locals variables used in this module
 locals {
    BASENAME = var.prefix
    REGION   = var.region
    ZONE     = var.zone
+   SSH_KEY  = var.ssh_key
 }
 
 # Existing SSH key can be provided
 data "ibm_is_ssh_key" "ssh_key_id" {
-   name = var.ssh_key
+   name = local.SSH_KEY
 }
 
 
@@ -28,13 +29,13 @@ resource "ibm_resource_group" "this" {
 
 
 resource "ibm_is_vpc" "this" {
-  name = "${local.BASENAME}"
+  name = local.BASENAME
   resource_group = ibm_resource_group.this.id
 }
 
 # Security group
 resource "ibm_is_security_group" "this" {
-   name = "${local.BASENAME}"
+   name = local.BASENAME
    vpc  = ibm_is_vpc.this.id
 }
 
@@ -42,7 +43,7 @@ resource "ibm_is_security_group" "this" {
 resource "ibm_is_security_group_rule" "ingress_ssh_all" {
    group     = ibm_is_security_group.this.id
    direction = "inbound"
-   remote    = "0.0.0.0/0"
+   remote    = "0.0.0.0/0"  # NOTE: Ideally you would only allow SSH from your IP or Network
 
    tcp {
      port_min = 22
@@ -73,7 +74,7 @@ resource "ibm_is_security_group_rule" "egress_all" {
 
 # Subnet
 resource "ibm_is_subnet" "this" {
-   name                     = "${local.BASENAME}"
+   name                     = local.BASENAME
    vpc                      = ibm_is_vpc.this.id
    zone                     = local.ZONE
    total_ipv4_address_count = 256
@@ -93,7 +94,7 @@ data "ibm_is_image" "ubuntu" {
 
 # Virtual Server Insance
 resource "ibm_is_instance" "this" {
-   name    = "${local.BASENAME}"
+   name    = local.BASENAME
    vpc     = ibm_is_vpc.this.id
    keys    = [ data.ibm_is_ssh_key.ssh_key_id.id ]
    zone    = local.ZONE
@@ -117,7 +118,7 @@ resource "ibm_is_instance" "this" {
 
 # Request a foaling ip
 resource "ibm_is_floating_ip" "this" {
-   name   = "${local.BASENAME}"
+   name   = local.BASENAME
    target = ibm_is_instance.this.primary_network_interface[0].id
 }
 

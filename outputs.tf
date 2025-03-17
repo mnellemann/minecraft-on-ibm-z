@@ -5,12 +5,14 @@
 #    value = ibm_is_vpc.name
 #}
 
-# Try to logon to the Virtual Service Instance
+# Display information for logging into our virtual server through SSH
 output "ssh-command" {
    value = "ssh root@${ibm_is_floating_ip.this.address}"
 }
 
 
+# Display the hostname and port of your Minecraft server, which you would
+# enter into Multiplayer -> Direct Connect when running the game.
 output "minecraft-server" {
-   value = "Minecraft server running on ${ibm_is_floating_ip.this.address} port ${var.minecraft_port}"
+   value = "Minecraft Multiplayer Direct Connect: ${ibm_is_floating_ip.this.address}:${var.minecraft_port}"
 }
